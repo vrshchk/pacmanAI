@@ -1,20 +1,28 @@
 import pygame
 from settings import *
+from problem import *
 vec = pygame.math.Vector2
 
 class Player:
     def __init__(self, app, pos):
         self.app = app
         self.grid_pos = pos
-        self.pix_pos = vec(self.grid_pos.x*self.app.cell_width+self.app.cell_width//2, self.grid_pos.y*self.app.cell_height+self.app.cell_height//2)
+        self.pix_pos = vec(self.grid_pos[0]*self.app.cell_width+self.app.cell_width//2, self.grid_pos[1]*self.app.cell_height+self.app.cell_height//2)
         self.direction = vec(0,0)
         self.stored_direction = None
         self.able_to_move = True
-        self.speed = 5
+        self.speed = 18
+        print("candy ", self.app.coins[0])
+        self.path = searchPath((self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
+        self.current = 0
+        self.aim = self.path[self.current]
+        
+
      
 
 
     def update(self):
+        self.move()
         if self.able_to_move:
             self.pix_pos += self.direction*self.speed
         if self.time_to_move(): 
@@ -22,13 +30,22 @@ class Player:
                 self.direction = self.stored_direction
             self.able_to_move = self.can_move()
 
-  
         self.grid_pos[0] = self.pix_pos[0] // self.app.cell_width
         self.grid_pos[1] = self.pix_pos[1] // self.app.cell_height
 
+        if (self.grid_pos[0] == self.aim[0] and self.grid_pos[1] == self.aim[1]):
+            self.pix_pos = vec(self.grid_pos[0]*self.app.cell_width+self.app.cell_width//2, self.grid_pos[1]*self.app.cell_height+self.app.cell_height//2)
+            if (self.grid_pos[0]==self.app.coins[0] and self.grid_pos[1]==self.app.coins[1]):
+                self.app.state = "game over"
+            else:
+                self.current+=1
+                if self.current<len(self.path):
+                    self.aim = self.path[self.current]
 
         if self.on_coin():
             self.eat_coin()
+
+
 
 
     def draw(self):
@@ -52,9 +69,18 @@ class Player:
         self.app.state = 'game over'
 
 
-    def move(self, direction):
-        self.stored_direction = direction
-    
+    def move(self):
+        if (self.grid_pos[0] - 1 == self.aim[0]):
+            self.direction = vec(-1,0)
+        if (self.grid_pos[0] + 1 == self.aim[0]):
+            self.direction = vec(1,0)
+        if (self.grid_pos[1] - 1 == self.aim[1]):
+            self.direction = vec(0,-1)
+        if (self.grid_pos[1] + 1 == self.aim[1]):
+            self.direction = vec(0,1)
+        self.stored_direction = self.direction
+        
+
 
 
     def time_to_move(self):
@@ -64,9 +90,6 @@ class Player:
         if (int(self.pix_pos.y+self.app.cell_height//2) % self.app.cell_height) == 0:
             if self.direction == vec(0, 1) or self.direction == vec(0, -1) or self.direction == vec(0, 0):
                 return True
-
-    def doMove(self):
-        self.pix_pos.x+=direction*self.app.cell_width
 
 
     def can_move(self):

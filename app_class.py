@@ -69,9 +69,11 @@ class App:
                     elif char == "0":
                         self.free.append(vec(xidx, yidx))
 
-        self.p_pos = random.choice(self.free)
+        temp = random.choice(self.free)
+        self.p_pos = [temp.x, temp.y]
         self.free.remove(self.p_pos)
-        self.coins.append(random.choice(self.free))
+        temp = random.choice(self.free)
+        self.coins.append([temp.x,temp.y])
 
 
     def draw_grid(self):
@@ -94,11 +96,16 @@ class App:
                     elif char == "0":
                         self.free.append(vec(xidx, yidx))
 
-        self.p_pos = random.choice(self.free)
+        #self.p_pos = random.choice(self.free)
+        temp = random.choice(self.free)
+        self.p_pos = [temp.x, temp.y]
+        temp = random.choice(self.free)
+        self.coins.append([temp.x,temp.y])
         self.player = Player(self, self.p_pos)
         self.free.remove(self.p_pos)
-        self.coins.append(random.choice(self.free))
+        #self.coins.append(random.choice(self.free))
         self.state = "playing"
+
 
 
 ######################### intro functions ######################
@@ -125,24 +132,24 @@ class App:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    self.player.move(vec(-1, 0))
-                if event.key == pygame.K_RIGHT:
-                    self.player.move(vec(1, 0))
-                if event.key == pygame.K_UP:
-                    self.player.move(vec(0, -1))
-                if event.key == pygame.K_DOWN:
-                    self.player.move(vec(0, 1))
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    self.player.move(vec(0, 0))
-                if event.key == pygame.K_RIGHT:
-                    self.player.move(vec(0, 0))
-                if event.key == pygame.K_UP:
-                    self.player.move(vec(0, 0))
-                if event.key == pygame.K_DOWN:
-                    self.player.move(vec(0, 0))
+            # if event.type == pygame.KEYDOWN:
+            #     if event.key == pygame.K_LEFT:
+            #         self.player.move(vec(-1, 0))
+            #     if event.key == pygame.K_RIGHT:
+            #         self.player.move(vec(1, 0))
+            #     if event.key == pygame.K_UP:
+            #         self.player.move(vec(0, -1))
+            #     if event.key == pygame.K_DOWN:
+            #         self.player.move(vec(0, 1))
+            # if event.type == pygame.KEYUP:
+            #     if event.key == pygame.K_LEFT:
+            #         self.player.move(vec(0, 0))
+            #     if event.key == pygame.K_RIGHT:
+            #         self.player.move(vec(0, 0))
+            #     if event.key == pygame.K_UP:
+            #         self.player.move(vec(0, 0))
+            #     if event.key == pygame.K_DOWN:
+            #         self.player.move(vec(0, 0))
 
 
     def playing_update(self):
@@ -158,7 +165,7 @@ class App:
 
     def draw_coins(self):
         for coin in self.coins:
-            self.screen.blit(self.candy, (int(coin.x*self.cell_width-self.cell_width//2 + 6), int(coin.y*self.cell_height-self.cell_height//2 + 5)))
+            self.screen.blit(self.candy, (int(coin[0]*self.cell_width-self.cell_width//2 + 6), int(coin[1]*self.cell_height-self.cell_height//2 + 5)))
 
 
 ########################### game over functions ################################

@@ -33,8 +33,8 @@ class Player:
 
     def draw(self):
         pygame.draw.circle(self.app.screen, PLAYER_COLOR, (int(self.pix_pos.x), int(self.pix_pos.y)), self.app.cell_width//2-2)
-        #pygame.image.load('pacmanSprites/pacman.gif')
-        #pygame.transform.scale(self.app.screen, (self.app.cell_width ,self.app.cell_height))
+        pygame.image.load('pacmanSprites/pacman.gif')
+        pygame.transform.scale(self.app.screen, (self.app.cell_width ,self.app.cell_height))
 
     def on_coin(self):
         if self.grid_pos in self.app.coins:

@@ -134,6 +134,15 @@ class App:
                     self.player.move(vec(0, -1))
                 if event.key == pygame.K_DOWN:
                     self.player.move(vec(0, 1))
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    self.player.move(vec(0, 0))
+                if event.key == pygame.K_RIGHT:
+                    self.player.move(vec(0, 0))
+                if event.key == pygame.K_UP:
+                    self.player.move(vec(0, 0))
+                if event.key == pygame.K_DOWN:
+                    self.player.move(vec(0, 0))
 
 
     def playing_update(self):

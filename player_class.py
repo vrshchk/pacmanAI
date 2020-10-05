@@ -10,18 +10,22 @@ class Player:
         self.direction = vec(0,0)
         self.stored_direction = None
         self.able_to_move = True
-        self.speed = 2
+        self.speed = 5
+     
+
 
     def update(self):
         if self.able_to_move:
             self.pix_pos += self.direction*self.speed
-        if self.time_to_move():
+        if self.time_to_move(): 
             if self.stored_direction != None:
                 self.direction = self.stored_direction
             self.able_to_move = self.can_move()
 
+  
         self.grid_pos[0] = self.pix_pos[0] // self.app.cell_width
         self.grid_pos[1] = self.pix_pos[1] // self.app.cell_height
+
 
         if self.on_coin():
             self.eat_coin()
@@ -50,6 +54,7 @@ class Player:
 
     def move(self, direction):
         self.stored_direction = direction
+    
 
 
     def time_to_move(self):
@@ -59,6 +64,9 @@ class Player:
         if (int(self.pix_pos.y+self.app.cell_height//2) % self.app.cell_height) == 0:
             if self.direction == vec(0, 1) or self.direction == vec(0, -1) or self.direction == vec(0, 0):
                 return True
+
+    def doMove(self):
+        self.pix_pos.x+=direction*self.app.cell_width
 
 
     def can_move(self):

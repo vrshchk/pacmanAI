@@ -17,7 +17,8 @@ class Player:
         self.speed = 7
         start_time = time.time()
         self.path = SearchProblem.depthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
-        print(self.path)
+        print("dfs " , self.path)
+        print(" bfs ", SearchProblem.breadthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1])))
         print("Time spent for search: %s seconds" % (time.time() - start_time))
         print("Steps done during search: ", len(self.path))
         print ("Memory spent: ", sys.getsizeof(SearchProblem.depthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))), " bytes")
@@ -96,3 +97,45 @@ class Player:
             if vec(self.grid_pos+self.direction) == wall:
                 return False
         return True
+
+
+
+
+
+    def getStartState(self):
+        return (self.app.p_pos[0],self.app.p_pos[1])
+
+
+    def isGoalState(self, pos):
+        return (pos[0] == self.app.coins[0][0] and pos[1] == self.app.coins[0][1])
+
+
+
+    def getSuccessors(self, pos):
+        print("pos: ", pos)
+        vector = pygame.math.Vector2
+        vec = vector(pos[0], pos[1])
+        s = set()
+        v = pygame.math.Vector2
+
+        if (vec.x-1 >= 0):
+            if (v(vec.x - 1, vec.y) in self.app.free):
+                pair = (vec.x - 1, vec.y)
+                s.add(pair)
+        if (vec.y-1 >= 0):
+            if (v(vec.x, vec.y-1) in self.app.free):
+                pair = (vec.x, vec.y - 1)
+                s.add(pair)
+        if (vec.x+1 < lenX):
+            if (v(vec.x + 1, vec.y) in self.app.free):
+                pair = (vec.x + 1, vec.y)
+                s.add(pair)
+        if (vec.y+1 < lenY):
+            if (v(vec.x, vec.y+1) in self.app.free):
+                pair = (vec.x, vec.y+1)
+                s.add(pair)
+        return s
+
+
+
+

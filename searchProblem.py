@@ -1,23 +1,46 @@
 from queue import PriorityQueue
 import threading, queue
+from abc import ABC, abstractmethod
 
 
-class SearchProblem:
 
+class SearchProblem(ABC):
+
+    @abstractmethod
     def getStartState(self):
         util.raiseNotDefined()
 
+    @abstractmethod    
     def isGoalState(self, state):
         util.raiseNotDefined()
 
+    @abstractmethod
     def getSuccessors(self, state):
-        util.raiseNotDefined()
-
-    def getCostOfActions(self, actions):
         util.raiseNotDefined()
 
 
     def depthFirstSearch(graph, start, goal):
+        visited = []
+        path = []
+        q = []
+        q.append((start,path))
+        while not len(q)==0:
+            current_node, path = q.pop()
+            if current_node == goal:
+                return path + [current_node]
+            visited = visited + [current_node]
+            child_nodes = graph[current_node]
+            for node in child_nodes:
+                if node not in visited:
+                    if node == goal:
+                        return path + [node]
+                    q.append((node, path + [node]))
+        return path
+
+
+
+
+    def breadthFirstSearch(graph, start, goal):
         visited = []
         path = []
         q = queue.Queue()
@@ -33,28 +56,6 @@ class SearchProblem:
                     if node == goal:
                         return path + [node]
                     q.put((node, path + [node]))
-        return path
-
-
-
-
-    def breadthFirstSearch(graph, start, goal):
-        visited = []
-        path = []
-        fringe = PriorityQueue()
-        fringe.put((0, start, path, visited))
-        while not fringe.empty():
-            depth, current_node, path, visited = fringe.get()
-            if current_node == goal:
-                return path + [current_node]
-            visited = visited + [current_node]
-            child_nodes = graph[current_node]
-            for node in child_nodes:
-                if node not in visited:
-                    if node == goal:
-                        return path + [node]
-                    depth_of_node = len(path)
-                    fringe.put((-depth_of_node, node, path + [node], visited))
         return path
 
 

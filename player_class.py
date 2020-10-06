@@ -17,6 +17,7 @@ class Player:
         self.speed = 7
         start_time = time.time()
         self.path = SearchProblem.depthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
+        print(self.path)
         print("Time spent for search: %s seconds" % (time.time() - start_time))
         print("Steps done during search: ", len(self.path))
         print ("Memory spent: ", sys.getsizeof(SearchProblem.depthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))), " bytes")

@@ -1,6 +1,9 @@
 import pygame
+import sys
 from settings import *
-from problem import *
+from graph import *
+from searchProblem import *
+import time
 vec = pygame.math.Vector2
 
 class Player:
@@ -11,16 +14,15 @@ class Player:
         self.direction = vec(0,0)
         self.stored_direction = None
         self.able_to_move = True
-        self.speed = 18
-        print("candy ", self.app.coins[0])
-        self.path = searchPath((self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
+        self.speed = 7
+        start_time = time.time()
+        self.path = SearchProblem.depthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
+        print("Time spent for search: %s seconds" % (time.time() - start_time))
+        print("Steps done during search: ", len(self.path))
+        print ("Memory spent: ", sys.getsizeof(SearchProblem.depthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))), " bytes")
         self.current = 0
         self.aim = self.path[self.current]
-        
-
-     
-
-
+         
     def update(self):
         self.move()
         if self.able_to_move:
@@ -44,8 +46,6 @@ class Player:
 
         if self.on_coin():
             self.eat_coin()
-
-
 
 
     def draw(self):
@@ -80,8 +80,6 @@ class Player:
             self.direction = vec(0,1)
         self.stored_direction = self.direction
         
-
-
 
     def time_to_move(self):
         if (int(self.pix_pos.x+self.app.cell_width//2) % self.app.cell_width) == 0:

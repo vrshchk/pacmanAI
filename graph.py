@@ -1,29 +1,6 @@
-from queue import PriorityQueue
+
 import pygame
 vec = pygame.math.Vector2
-
-
-def dfs(graph, start, goal:tuple):
-    print("goal", goal)
-    print("start", start)
-    visited = []
-    path = []
-    fringe = PriorityQueue()
-    fringe.put((0, start, path, visited))
-    while not fringe.empty():
-        depth, current_node, path, visited = fringe.get()
-        if current_node == goal:
-            return path + [current_node]
-        visited = visited + [current_node]
-        child_nodes = graph[current_node]
-        for node in child_nodes:
-            if node not in visited:
-                if node == goal:
-                    return path + [node]
-                depth_of_node = len(path)
-                fringe.put((-depth_of_node, node, path + [node], visited))
-    return path
-  
 
 walls = []
 free = []
@@ -37,8 +14,7 @@ with open("walls.txt", 'r') as file:
                 for xidx, char in enumerate(line):
                     lenX+=1
                     if char == '1':
-                        walls.append(vec(xidx, yidx))
-                        
+                        walls.append(vec(xidx, yidx))           
                     elif char == "0":
                         free.append(vec(xidx, yidx))
 
@@ -68,10 +44,8 @@ for vec in free:
     pair  = (vec.x, vec.y)    
     graph[pair] = s
 
-
-
-def searchPath(start, goal):
-    return dfs(graph, start, goal)
+def getGraph():
+    return graph
 
 
 

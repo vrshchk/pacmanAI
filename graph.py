@@ -14,7 +14,7 @@ with open("walls.txt", 'r') as file:
                 for xidx, char in enumerate(line):
                     lenX+=1
                     if char == '1':
-                        walls.append(vec(xidx, yidx))           
+                        walls.append(vec(xidx, yidx))
                     elif char == "0":
                         free.append(vec(xidx, yidx))
 
@@ -41,21 +41,9 @@ for vec in free:
             pair = (vec.x, vec.y+1)
             s.add(pair)
 
-    pair  = (vec.x, vec.y)    
+    pair  = (vec.x, vec.y)
     graph[pair] = s
+
 
 def getGraph():
     return graph
-
-
-
-
-
-
-
-
-
-
-
-
-

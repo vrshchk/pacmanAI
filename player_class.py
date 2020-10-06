@@ -71,8 +71,6 @@ class Player:
 
 
 
-
-
     def loadSprites(self):
         self.pacmanD1 = pygame.image.load("pacmanSprites/pacman-d 1.gif")
         self.pacmanD1 = pygame.transform.scale(self.pacmanD1, (self.app.cell_width ,self.app.cell_height))
@@ -266,16 +264,12 @@ class Player:
         return True
 
 
-
-
-
     def getStartState(self):
         return (self.app.p_pos[0],self.app.p_pos[1])
 
 
     def isGoalState(self, pos):
         return (pos[0] == self.app.coins[0][0] and pos[1] == self.app.coins[0][1])
-
 
 
     def getSuccessors(self, pos):

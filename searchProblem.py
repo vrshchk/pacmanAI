@@ -3,14 +3,13 @@ import threading, queue
 from abc import ABC, abstractmethod
 
 
-
 class SearchProblem(ABC):
 
     @abstractmethod
     def getStartState(self):
         util.raiseNotDefined()
 
-    @abstractmethod    
+    @abstractmethod
     def isGoalState(self, state):
         util.raiseNotDefined()
 
@@ -36,9 +35,7 @@ class SearchProblem(ABC):
                         return path + [node]
                     q.append((node, path + [node]))
         return path
-
-
-
+        
 
     def breadthFirstSearch(graph, start, goal):
         visited = []
@@ -57,9 +54,3 @@ class SearchProblem(ABC):
                         return path + [node]
                     q.put((node, path + [node]))
         return path
-
-
-
-
-
-

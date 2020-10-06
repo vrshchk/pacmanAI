@@ -15,13 +15,27 @@ class Player:
         self.stored_direction = None
         self.able_to_move = True
         self.speed = 7
+        print("DFS: ")
         start_time = time.time()
-        self.path = SearchProblem.depthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
-        print("dfs " , self.path)
-        print(" bfs ", SearchProblem.breadthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1])))
+        self.path1 = SearchProblem.depthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
         print("Time spent for search: %s seconds" % (time.time() - start_time))
-        print("Steps done during search: ", len(self.path))
+        print("Steps done during search: ", len(self.path1))
         print ("Memory spent: ", sys.getsizeof(SearchProblem.depthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))), " bytes")
+        
+        
+        print("BFS: ")
+        start_time = time.time()
+        self.path2 = SearchProblem.breadthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
+        print("Time spent for search: %s seconds" % (time.time() - start_time))
+        print("Steps done during search: ", len(self.path2))
+        print ("Memory spent: ", sys.getsizeof(SearchProblem.breadthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))), " bytes")
+
+        if (len(self.path1)<len(self.path2)):
+            self.path = self.path1
+            print ("We use DFS")
+        else:
+            self.path = self.path2
+            print ("We use BFS")
         self.current = 0
         self.aim = self.path[self.current]
          

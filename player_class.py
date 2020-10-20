@@ -38,6 +38,15 @@ class Player:
         print ("Memory spent: ", sys.getsizeof(SearchProblem.astar(getFree(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))), " bytes")
 
 
+
+        print("Greedy: ")
+        start_time = time.time()
+        self.path4 = SearchProblem.greedy(getFree(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
+        print("Time spent for search: %s seconds" % (time.time() - start_time))
+        print("Steps to goal: ", len(self.path4))
+        print ("Memory spent: ", sys.getsizeof(SearchProblem.greedy(getFree(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))), " bytes")
+
+
         if (len(self.path1)<len(self.path2)):
             self.path = self.path1
             print ("We use DFS")
@@ -46,6 +55,7 @@ class Player:
             print ("We use BFS")
 
         self.current = 0
+        self.path = self.path4
         self.aim = self.path[self.current]
         self.way = 'r'
         self.mouth = 1

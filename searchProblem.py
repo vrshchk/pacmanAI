@@ -3,6 +3,7 @@ import threading, queue
 from abc import ABC, abstractmethod
 
 
+
 class SearchProblem(ABC):
 
     @abstractmethod
@@ -35,7 +36,7 @@ class SearchProblem(ABC):
                         return path + [node]
                     q.append((node, path + [node]))
         return path
-        
+
 
     def breadthFirstSearch(graph, start, goal):
         visited = []

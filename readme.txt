@@ -1,4 +1,4 @@
-Our pacmanAI is implemented using depth-first search and breadth-first search.
+Our pacmanAI is implemented using depth-first search, breadth-first search, a-star and greedy algorithm.
 To run it you have to complete next steps:
 
 

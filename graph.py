@@ -7,6 +7,7 @@ free = []
 lenX = 0
 lenY = 0
 
+
 with open("walls.txt", 'r') as file:
             for yidx, line in enumerate(file):
                 lenY+=1
@@ -47,3 +48,7 @@ for vec in free:
 
 def getGraph():
     return graph
+
+
+def getFree():
+    return free

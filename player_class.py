@@ -15,6 +15,7 @@ class Player:
         self.stored_direction = None
         self.able_to_move = True
         self.speed = 2
+
         print("DFS: ")
         start_time = time.time()
         self.path1 = SearchProblem.depthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
@@ -29,27 +30,12 @@ class Player:
         print("Steps to goal: ", len(self.path2))
         print ("Memory spent: ", sys.getsizeof(SearchProblem.breadthFirstSearch(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))), " bytes")
 
-
-<<<<<<< HEAD
-        # print("AStar: ")
-        # start_time = time.time()
-        # self.path3 = a_star_search(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
-        # print("Time spent for search: %s seconds" % (time.time() - start_time))
-        # print("Steps done during search: ", len(self.path3))
-        # print ("Memory spent: ", sys.getsizeof(a_star_search(getGraph(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))), " bytes")
-        #
-
-
-
-=======
         print("A-Star: ")
         start_time = time.time()
         self.path3 = SearchProblem.astar(getFree(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))
         print("Time spent for search: %s seconds" % (time.time() - start_time))
         print("Steps to goal: ", len(self.path3))
         print ("Memory spent: ", sys.getsizeof(SearchProblem.astar(getFree(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))), " bytes")
-
-
 
         print("Greedy: ")
         start_time = time.time()
@@ -58,21 +44,20 @@ class Player:
         print("Steps to goal: ", len(self.path4))
         print ("Memory spent: ", sys.getsizeof(SearchProblem.greedy(getFree(), (self.app.p_pos[0],self.app.p_pos[1]), (self.app.coins[0][0], self.app.coins[0][1]))), " bytes")
 
+        self.steps_list = [(len(self.path1), self.path1), (len(self.path2), self.path2), (len(self.path3), self.path3), (len(self.path4), self.path4)]
+        self.steps_list.sort()
+        self.path = self.steps_list[0][1]
 
->>>>>>> 0c9d499ce11ddf2150abd2d39d9e78a0f0537357
-        if (len(self.path1)<len(self.path2)):
-            self.path = self.path1
-            print ("We use DFS")
-        else :
-            self.path = self.path2
-            print ("We use BFS")
-<<<<<<< HEAD
-    #    self.path = self.path3
-=======
+        if self.path is self.path1:
+            print("We use DFS")
+        elif self.path is self.path2:
+            print("We use BFS")
+        elif self.path is self.path3:
+            print("We use A-Star")
+        else:
+            print("We use Greedy")
 
->>>>>>> 0c9d499ce11ddf2150abd2d39d9e78a0f0537357
         self.current = 0
-        self.path = self.path4
         self.aim = self.path[self.current]
         self.way = 'r'
         self.mouth = 1
